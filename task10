@@ -1,0 +1,34 @@
+CREATE DATABASE task10;
+USE task10;
+
+CREATE TABLE BankAccounts (
+    AccountID INT PRIMARY KEY,
+    AccountHolder VARCHAR(100),
+    Balance DECIMAL(10, 2)
+);
+
+
+BEGIN TRANSACTION;
+
+GO
+BEGIN TRY
+    UPDATE BankAccounts
+    SET Balance = Balance - 500
+    WHERE AccountID = 1;
+
+	END TRY
+
+
+	GO
+	CREATE TABLE Students (
+    StudentID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(100),
+    Age INT
+);
+
+CREATE TABLE StudentLogs (
+    LogID INT PRIMARY KEY IDENTITY(1,1),
+    StudentID INT,
+    Action VARCHAR(100),
+    LogTime DATETIME DEFAULT GETDATE()
+);
