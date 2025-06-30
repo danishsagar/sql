@@ -1,0 +1,31 @@
+CREATE DATABASE task8;
+USE task8;
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    PhoneNumber VARCHAR(20)
+);
+
+
+
+INSERT INTO Students (Name, Age, PhoneNumber)
+VALUES
+('Ali', 22, '123-456-7890'),
+('Sara', 20, '234-567-8901'),
+('John', 21, '345-678-9012'),
+('Lina', 23, '456-789-0123'),
+('Tom', 19, '567-890-1234');
+
+GO
+CREATE VIEW StudentDetails AS SELECT Name, Age
+FROM Students;
+
+GO
+CREATE VIEW StudentsAbove21 AS SELECT Name, Age
+FROM Students WHERE Age > 21;
+
+GO
+ALTER VIEW StudentDetails AS SELECT Name, Age, PhoneNumber
+FROM Students;
