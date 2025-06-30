@@ -1,0 +1,56 @@
+CREATE DATABASE task12;
+USE task12;
+
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY IDENTITY(1,1),
+    DepartmentName VARCHAR(100)
+);
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    PhoneNumber VARCHAR(20),
+    DepartmentID INT FOREIGN KEY REFERENCES Departments(DepartmentID)
+);
+
+CREATE TABLE DeletedStudents (
+    StudentID INT,
+    Name VARCHAR(100),
+    Age INT,
+    PhoneNumber VARCHAR(20),
+    DeletedAt DATETIME DEFAULT GETDATE()
+);
+
+GO
+CREATE TRIGGER trg_LogStudentDeletion
+ON DeletedStudents
+AFTER DELETE
+AS
+BEGIN
+    INSERT INTO DeletedStudents (StudentID, Name, Age, PhoneNumber)
+    SELECT StudentID, Name, Age, PhoneNumber
+    FROM DELETED;
+END;
+
+
+
+--------------------------------------------------------
+
+GO
+CREATE TRIGGER trg_PreventUnderageInsert
+ON Students
+INSTEAD OF INSERT
+AS
+BEGIN
+    IF EXISTS (SELECT 1 FROM INSERTED WHERE Age < 16)
+    BEGIN
+        RAISERROR('Cannot insert student younger than 16 years old.', 16, 1);
+        RETURN;
+    END
+
+
+    INSERT INTO Students (Name, Age, PhoneNumber, DepartmentID)
+    SELECT Name, Age, PhoneNumber, DepartmentID
+    FROM INSERTED;
+END;
