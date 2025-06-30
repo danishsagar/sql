@@ -1,0 +1,25 @@
+CREATE DATABASE task4;
+USE task4;
+
+
+CREATE TABLE Products (
+    productID INT PRIMARY KEY IDENTITY(1,1),     
+    name VARCHAR(100) NOT NULL,                 
+    price DECIMAL(10, 2) NOT NULL,              
+    manufactureDate DATE NOT NULL               
+);
+
+---------------------------
+
+--Varchar
+		--ya sirf english language ko support karta ha 
+
+		name VARCHAR(50);
+
+---------------------------
+
+--NVarchar
+		--ya multiple languages ko support karta ha (like english, uedu,hindi,etc)
+
+		name NVARCHAR(50)
+--------------------------
