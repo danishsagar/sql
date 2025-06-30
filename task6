@@ -1,0 +1,43 @@
+CREATE DATABASE task6;
+USE task6;
+
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY IDENTITY(1,1),
+    CourseName VARCHAR(100) NOT NULL,
+    Credits INT CHECK (Credits > 0)
+);
+
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(100) NOT NULL,
+    Age INT,
+    CourseID INT,
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+
+
+INSERT INTO Courses (CourseName, Credits)
+VALUES 
+('Mathematics', 3),
+('Computer Science', 4),
+('Physics', 3),
+('History', 2); -- Course with no students
+
+
+INSERT INTO Students (Name, Age, CourseID)
+VALUES 
+('Ali', 22, 1),
+('Sara', 20, 2),
+('John', 21, NULL), -- Student not enrolled in any course
+('Lina', 23, 3);
+
+
+SELECT  Students.Name AS StudentName, Courses.CourseName FROM  Students
+INNER JOIN 
+    Courses ON Students.CourseID = Courses.CourseID;
+
+
+SELECT  Students.Name AS StudentName, Courses.CourseName FROM   Students
+FULL OUTER JOIN 
+    Courses ON Students.CourseID = Courses.CourseID;
