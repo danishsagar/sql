@@ -1,0 +1,44 @@
+CREATE DATABASE task7;
+USE task7;
+
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY IDENTITY(1,1),
+    DepartmentName VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    DepartmentID INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+
+INSERT INTO Departments (DepartmentName)
+VALUES 
+('Computer Science'),
+('Mathematics'),
+('Physics'),
+('Biology');
+
+
+INSERT INTO Students (Name, Age, DepartmentID)
+VALUES 
+('Ali', 22, 1),
+('Sara', 20, 1),
+('John', 21, 2),
+('Lina', 23, 3),
+('David', 22, 1),
+('Emily', 24, 1),
+('Amina', 25, 1),
+('Tom', 19, 4),
+('Jerry', 20, 2);
+
+
+SELECT Name FROM Students WHERE Age > ( SELECT AVG(Age) FROM Students);
+
+
+
+SELECT Name, Age FROM Students WHERE Age = (SELECT MAX(Age) FROM Students);
