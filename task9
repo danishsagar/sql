@@ -1,0 +1,37 @@
+CREATE DATABASE task9;
+USE task9;
+
+CREATE TABLE Departments (
+    DepartmentID INT PRIMARY KEY IDENTITY(1,1),
+    DepartmentName VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE Students (
+    StudentID INT PRIMARY KEY IDENTITY(1,1),
+    Name VARCHAR(100) NOT NULL,
+    Age INT NOT NULL,
+    PhoneNumber VARCHAR(20),
+    DepartmentID INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+
+GO
+CREATE PROCEDURE InsertStudent
+    @Name VARCHAR(100),
+    @Age INT,
+    @PhoneNumber VARCHAR(20),
+    @DepartmentID INT
+AS
+BEGIN
+    INSERT INTO Students (Name, Age, PhoneNumber, DepartmentID)
+    VALUES (@Name, @Age, @PhoneNumber, @DepartmentID);
+END;
+
+
+GO
+CREATE PROCEDURE UpdateStudentAge  @StudentID INT, @NewAge INT
+AS
+BEGIN
+    UPDATE Students SET Age = @NewAge WHERE StudentID = @StudentID;
+END;
